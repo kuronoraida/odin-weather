@@ -68,3 +68,15 @@ unitSwitch.addEventListener('click', (e) => {
         feelslikeF.classList.add('hidden');
     }
 })
+
+function getGeolocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getGeolocationWeather);
+    }
+  }
+
+function getGeolocationWeather(position) {
+    getWeather(`${position.coords.latitude},${position.coords.longitude}`);
+};
+
+getGeolocation();
