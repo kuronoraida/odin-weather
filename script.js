@@ -53,3 +53,18 @@ function updateDOM(weatherData) {
     condition.innerHTML = weatherData.condition;
     currentlocation.innerHTML = weatherData.location;
 }
+
+const unitSwitch = document.querySelector('.unitswitch');
+unitSwitch.addEventListener('click', (e) => {
+    if (e.target.checked) {
+        tempF.classList.remove('hidden');
+        feelslikeF.classList.remove('hidden');
+        tempC.classList.add('hidden');
+        feelslikeC.classList.add('hidden');
+    } else {
+        tempC.classList.remove('hidden');
+        feelslikeC.classList.remove('hidden');
+        tempF.classList.add('hidden');
+        feelslikeF.classList.add('hidden');
+    }
+})
