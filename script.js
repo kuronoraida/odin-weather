@@ -1,15 +1,55 @@
-async function fetchWeather(location) {
-    let weatherPromise = await fetch('https://api.weatherapi.com/v1/current.json?key=94032da22c874d6284824119230612&q=melbourne');
-    let weatherData = await weatherPromise.json();
-    return weatherData;
+async function fetchWeather(fromLocation) {
+    try {
+        let weatherPromise = await fetch(`https://api.weatherapi.com/v1/current.json?key=94032da22c874d6284824119230612&q=${fromLocation}`);
+        let weatherData = await weatherPromise.json();
+        console.log(weatherData);
+        return weatherData;
+    } catch (error) {
+        console.log('fetch error');
+    }
 }
 
-async function getWeather(location) {
-    let weatherData = await fetchWeather(location);
-    let weatherObject = {
-        tempC: weatherData.current.temp_c,
-        tempF: weatherData.current.temp_f
-    };
-    console.log(weatherObject);
-    return weatherObject;
+async function getWeather(fromLocation) {
+    try {
+        let weatherData = await fetchWeather(fromLocation);
+        let weatherProcessed = {
+            tempC: weatherData.current.temp_c,
+            tempF: weatherData.current.temp_f,
+            feelslikeC: weatherData.current.feelslike_c,
+            feelslikeF: weatherData.current.feelslike_f,
+            humidity: weatherData.current.humidity,
+            condition: weatherData.current.condition.text,
+            location: weatherData.location.name + ', '
+                + weatherData.location.region + ', '
+                + weatherData.location.country
+        };
+        updateDOM(weatherProcessed);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const searchBox = document.querySelector("input[type='search']");
+const searchSubmit = document.querySelector("input[type='submit']");
+searchSubmit.addEventListener('click', (e) => {
+    e.preventDefault();
+    getWeather(searchBox.value);
+})
+
+const tempC = document.querySelector('.tempc');
+const tempF = document.querySelector('.tempf');
+const feelslikeC = document.querySelector('.feelslikec');
+const feelslikeF = document.querySelector('.feelslikef');
+const humidity = document.querySelector('.humidity');
+const condition = document.querySelector('.condition');
+const currentlocation = document.querySelector('.location');
+function updateDOM(weatherData) {
+    console.log('updating dom');
+    tempC.innerHTML = weatherData.tempC;
+    tempF.innerHTML = weatherData.tempF;
+    feelslikeC.innerHTML = weatherData.feelslikeC;
+    feelslikeF.innerHTML = weatherData.feelslikeF;
+    humidity.innerHTML = weatherData.humidity;
+    condition.innerHTML = weatherData.condition;
+    currentlocation.innerHTML = weatherData.location;
 }
