@@ -7,16 +7,21 @@
     <title>Weather</title>
     <link rel="stylesheet" href="./styles.css">
     <script src="/script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
-    <div class="main">
+    <div class="main transparent">
         <div>
-            <div class="tempc"></div>
-            <div class="icon"></div>
+            <div class="tempc large"></div>
+            <div class="tempf large hidden"></div>
         </div>
         <div>
-            <div class="tempf hidden"></div>
+            <div class="icon"></div>
             <div class="feelslikec"></div>
             <div class="feelslikef hidden"></div>
             <div class="humidity"></div>
@@ -26,8 +31,8 @@
     </div>
     <div class="controls">
         <form>
-            <input type="search" name="location" id="location" placeholder="Location">
-            <input type="submit" value="Change location">
+            <input class="search" type="search" name="location" id="location" placeholder="Location">
+            <input class="submit" type="submit" value="Change location">
         </form>
         <span>°C</span>
         <label class="switch">
