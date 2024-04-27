@@ -1,3 +1,14 @@
+const searchBox = document.querySelector("input[type='search']");
+const searchSubmit = document.querySelector("input[type='submit']");
+const unitSwitch = document.querySelector('.unitswitch');
+const tempC = document.querySelector('.tempc');
+const tempF = document.querySelector('.tempf');
+const feelslikeC = document.querySelector('.feelslikec');
+const feelslikeF = document.querySelector('.feelslikef');
+const humidity = document.querySelector('.humidity');
+const condition = document.querySelector('.condition');
+const currentlocation = document.querySelector('.location');
+
 async function fetchWeather(fromLocation) {
     try {
         let weatherPromise = await fetch(`https://api.weatherapi.com/v1/current.json?key=94032da22c874d6284824119230612&q=${fromLocation}`);
@@ -24,25 +35,17 @@ async function getWeather(fromLocation) {
                 + weatherData.location.country
         };
         updateDOM(weatherProcessed);
+        localStorage.setItem("location", fromLocation);
     } catch (error) {
         console.log(error);
     }
 }
 
-const searchBox = document.querySelector("input[type='search']");
-const searchSubmit = document.querySelector("input[type='submit']");
 searchSubmit.addEventListener('click', (e) => {
     e.preventDefault();
     getWeather(searchBox.value);
 })
 
-const tempC = document.querySelector('.tempc');
-const tempF = document.querySelector('.tempf');
-const feelslikeC = document.querySelector('.feelslikec');
-const feelslikeF = document.querySelector('.feelslikef');
-const humidity = document.querySelector('.humidity');
-const condition = document.querySelector('.condition');
-const currentlocation = document.querySelector('.location');
 function updateDOM(weatherData) {
     console.log('updating dom');
     tempC.innerHTML = weatherData.tempC;
@@ -54,14 +57,15 @@ function updateDOM(weatherData) {
     currentlocation.innerHTML = weatherData.location;
 }
 
-const unitSwitch = document.querySelector('.unitswitch');
 unitSwitch.addEventListener('click', (e) => {
     if (e.target.checked) {
+        localStorage.setItem("unit", "f");
         tempF.classList.remove('hidden');
         feelslikeF.classList.remove('hidden');
         tempC.classList.add('hidden');
         feelslikeC.classList.add('hidden');
     } else {
+        localStorage.setItem("unit", "c");
         tempC.classList.remove('hidden');
         feelslikeC.classList.remove('hidden');
         tempF.classList.add('hidden');
@@ -71,12 +75,24 @@ unitSwitch.addEventListener('click', (e) => {
 
 function getGeolocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getGeolocationWeather);
+        navigator.geolocation.getCurrentPosition(getGeolocationWeather);
     }
-  }
+}
 
 function getGeolocationWeather(position) {
     getWeather(`${position.coords.latitude},${position.coords.longitude}`);
 };
 
-getGeolocation();
+if (localStorage.getItem("location")) {
+    getWeather(localStorage.getItem("location"));
+} else {
+    getGeolocation();
+}
+
+if (localStorage.getItem("unit") === "f") {
+    unitSwitch.checked = true;
+    tempF.classList.remove('hidden');
+    feelslikeF.classList.remove('hidden');
+    tempC.classList.add('hidden');
+    feelslikeC.classList.add('hidden');
+}
