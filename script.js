@@ -3,6 +3,7 @@ const searchSubmit = document.querySelector("input[type='submit']");
 const unitSwitch = document.querySelector('.unitswitch');
 const tempC = document.querySelector('.tempc');
 const tempF = document.querySelector('.tempf');
+const icon = document.querySelector('.icon');
 const feelslikeC = document.querySelector('.feelslikec');
 const feelslikeF = document.querySelector('.feelslikef');
 const humidity = document.querySelector('.humidity');
@@ -32,7 +33,8 @@ async function getWeather(fromLocation) {
             condition: weatherData.current.condition.text,
             location: weatherData.location.name + ', '
                 + weatherData.location.region + ', '
-                + weatherData.location.country
+                + weatherData.location.country,
+            icon: weatherData.current.condition.icon
         };
         updateDOM(weatherProcessed);
         localStorage.setItem("location", fromLocation);
@@ -48,13 +50,14 @@ searchSubmit.addEventListener('click', (e) => {
 
 function updateDOM(weatherData) {
     console.log('updating dom');
-    tempC.innerHTML = weatherData.tempC;
-    tempF.innerHTML = weatherData.tempF;
-    feelslikeC.innerHTML = weatherData.feelslikeC;
-    feelslikeF.innerHTML = weatherData.feelslikeF;
-    humidity.innerHTML = weatherData.humidity;
+    tempC.innerHTML = weatherData.tempC + '°';
+    tempF.innerHTML = weatherData.tempF + '°';
+    feelslikeC.innerHTML = 'Feels like ' + weatherData.feelslikeC + '°';
+    feelslikeF.innerHTML = 'Feels like ' + weatherData.feelslikeF + '°';
+    humidity.innerHTML = weatherData.humidity + '% humidity';
     condition.innerHTML = weatherData.condition;
     currentlocation.innerHTML = weatherData.location;
+    icon.innerHTML = '<img src="' + weatherData.icon + '"></img>';
 }
 
 unitSwitch.addEventListener('click', (e) => {

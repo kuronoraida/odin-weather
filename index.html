@@ -10,23 +10,32 @@
 </head>
 
 <body>
-    <div class="tempc"></div>
-    <div class="tempf hidden"></div>
-    <div class="feelslikec"></div>
-    <div class="feelslikef hidden"></div>
-    <div class="humidity"></div>
-    <div class="condition"></div>
-    <div class="location"></div>
-    <form>
-        <input type="search" name="location" id="location" placeholder="Location">
-        <input type="submit" value="Get weather">
-    </form>
-    <span>C</span>
-    <label class="switch">
-        <input type="checkbox" class="unitswitch">
-        <span class="slider round"></span>
-    </label>
-    <span>F</span>
+    <div class="main">
+        <div>
+            <div class="tempc"></div>
+            <div class="icon"></div>
+        </div>
+        <div>
+            <div class="tempf hidden"></div>
+            <div class="feelslikec"></div>
+            <div class="feelslikef hidden"></div>
+            <div class="humidity"></div>
+            <div class="condition"></div>
+            <div class="location"></div>
+        </div>
+    </div>
+    <div class="controls">
+        <form>
+            <input type="search" name="location" id="location" placeholder="Location">
+            <input type="submit" value="Change location">
+        </form>
+        <span>°C</span>
+        <label class="switch">
+            <input type="checkbox" class="unitswitch">
+            <span class="slider round"></span>
+        </label>
+        <span>°F</span>
+    </div>
 </body>
 
 </html>
